@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "es2025",
+        "module": "node20",
+        "moduleResolution": "node16",
+
+        "strict": true,
+        "verbatimModuleSyntax": true,
+
+        "outDir": "dist",
+        "rootDir": "src",
+        "sourceMap": true,
+
+        "paths": {
+            "*.ts": [ "./src/*.ts" ],
+            "*.js": [ "./src/*.js" ],
+            "*": [ "./src/*/index.ts" ]
+        },
+        "types": [
+            "node"
+        ]
+    },
+    "exclude": [
+        "dist/**"
+    ]
+}

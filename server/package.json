@@ -1,0 +1,14 @@
+{
+  "name": "@mnt-monitor/server",
+  "type": "module",
+  "scripts": {
+    "clear": "rm -rf dist",
+    "build": "bleed build -c tsconfig.build.json",
+    "test": "node --import @bleed-believer/cli --test --"
+  },
+  "devDependencies": {
+    "@bleed-believer/cli": "^1.0.0",
+    "@types/node": "^25.6.0",
+    "typescript": "^6.0.3"
+  }
+}
