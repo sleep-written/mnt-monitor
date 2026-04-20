@@ -3,6 +3,8 @@
   "type": "module",
   "scripts": {
     "clear": "rm -rf dist",
+    "start": "bleed start ./src/index.ts",
+    "watch": "bleed start -w ./src/index.ts",
     "build": "bleed build -c tsconfig.build.json",
     "test": "node --import @bleed-believer/cli --test --"
   },

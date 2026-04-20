@@ -4,9 +4,12 @@ import { fileSystemload } from './file-system-load.js';
 import { asyncSpawn } from './async-spawn.js';
 
 export class FileSystem implements FileSystemObject {
-    static async load(): Promise<FileSystem[]> {
+    static async load(predicate?: (o: FileSystem, i: number) => boolean): Promise<FileSystem[]> {
         const data = await fileSystemload();
-        return data.map(x => new FileSystem(x));
+        const resp = data.map(x => new FileSystem(x));
+        return predicate
+        ?   resp.filter(predicate)
+        :   resp;
     }
 
     static async find(predicate: (o: FileSystem, i: number) => boolean): Promise<FileSystem | undefined> {
