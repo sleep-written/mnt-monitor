@@ -10,10 +10,17 @@ import { Menu } from 'lib/menu';
 
 @Command({
     path: 'setup',
-    name: 'Daemon Setup'
+    name: 'Mechty Setup',
+    info: [
+        'Setups the daemon behavior. For example, you can select which',
+        'filesystem target the daemon must watch.'
+    ].join('\n')
 })
 export class SetupCommand implements Executable {
     async start(): Promise<void> {
+        console.clear();
+        console.log(banner);
+        console.log('Initializing database...');
         await dataSource.initialize();
         
         await new Menu({
