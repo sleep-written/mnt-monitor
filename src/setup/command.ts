@@ -8,6 +8,9 @@ import { dataSource } from 'data-source.ts';
 import { banner } from 'banner.ts';
 import { Menu } from 'lib/menu';
 
+import { InstallMenuItem } from './install.menu-item.js';
+import { ExitMenuItem } from './exit.menu-item.js';
+
 @Command({
     path: 'setup',
     name: 'Mechty Setup',
@@ -35,11 +38,8 @@ export class SetupCommand implements Executable {
                     styleText('blue', '?'),
                     styleText('whiteBright', 'Another options:')
                 ].join(' '),
-                {
-                    title: '[💀] Exit',
-                    description: 'Closes the current daemon setup',
-                    callback: c => c.ctrl.abort()
-                }
+                new InstallMenuItem(),
+                new ExitMenuItem()
             ],
         }).execute();
 
