@@ -9,7 +9,6 @@ const database = resolve(baseDir, 'mechty-fstab/settings.db');
 await mkdir(dirname(database), { recursive: true });
 await appendFile(database, Buffer.alloc(0));
 
-console.log('db location:', database);
 export const dataSource = new DataSource({
     type: 'better-sqlite3',
     database,

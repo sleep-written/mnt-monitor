@@ -1,15 +1,15 @@
 import type { MenuContext, MenuItem } from 'lib/menu';
 import type { AsyncSpawnOptions } from 'lib/wrappers';
 
+import { mkdir, rm, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
-import { mkdir, writeFile } from 'node:fs/promises';
 import { asyncSpawn } from 'lib/wrappers';
+import { accessSync } from 'node:fs';
 import { homedir } from 'node:os';
 
 export class InstallMenuItem implements MenuItem {
-    readonly title = `[🛠️] Install service`;
-    readonly description = 'Install as "system.d" service';
-
+    #installed: boolean;
+    #opts: AsyncSpawnOptions = { throwsOnExitCode: true };
     #cwd = resolve(import.meta.dirname, `../..`);
 
     #serviceFlags = process.getuid?.() !== 0
@@ -24,9 +24,28 @@ export class InstallMenuItem implements MenuItem {
     ?   resolve(homedir(), '.config/systemd/user/mechty-fstab.service')
     :   '/etc/systemd/system/mechty-fstab.service';
 
-    #opts: AsyncSpawnOptions = {
-        throwsOnExitCode: true
-    };
+    get title(): string {
+        const verb = this.#installed
+        ?   'Uninstall'
+        :   'Install';
+
+        return `[🛠️] ${verb} service`;
+    }
+
+    get description(): string {
+        return this.#installed
+        ?   `Stops and removes the daemon from "systemd"`
+        :   `Creates and initialize the daemon in "systemd"`
+    }
+
+    constructor() {
+        try {
+            accessSync(this.#servicePath);
+            this.#installed = true;
+        } catch {
+            this.#installed = false;
+        }
+    }
 
     #buildFile(): string {
         const exec = [ process.execPath ];
@@ -57,18 +76,38 @@ export class InstallMenuItem implements MenuItem {
     }
 
     async callback(_: MenuContext): Promise<void> {
-        await mkdir(dirname(this.#servicePath), { recursive: true });
-        const data = this.#buildFile();
-        await writeFile(this.#servicePath, data);
+        if (!this.#installed) {
+            await mkdir(dirname(this.#servicePath), { recursive: true });
+            const data = this.#buildFile();
+            await writeFile(this.#servicePath, data);
+    
+            await asyncSpawn(
+                'systemctl', [ ...this.#serviceFlags, 'daemon-reload' ],
+                this.#opts
+            );
+    
+            await asyncSpawn(
+                'systemctl', [ ...this.#serviceFlags, 'enable', '--now', 'mechty-fstab' ],
+                this.#opts
+            );
+        } else {
+            await asyncSpawn(
+                'systemctl', [ ...this.#serviceFlags, 'stop', 'mechty-fstab' ],
+                this.#opts
+            );
 
-        await asyncSpawn(
-            'systemctl', [ ...this.#serviceFlags, 'daemon-reload' ],
-            this.#opts
-        );
+            await asyncSpawn(
+                'systemctl', [ ...this.#serviceFlags, 'disable', 'mechty-fstab' ],
+                this.#opts
+            );
 
-        await asyncSpawn(
-            'systemctl', [ ...this.#serviceFlags, 'enable', '--now', 'mechty-fstab' ],
-            this.#opts
-        );
+            await rm(this.#servicePath, { force: true });
+            await asyncSpawn(
+                'systemctl', [ ...this.#serviceFlags, 'daemon-reload' ],
+                this.#opts
+            );
+        }
+
+        this.#installed = !this.#installed;
     }
 }

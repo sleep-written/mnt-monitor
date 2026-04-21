@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { Commander, CommandNotFoundError } from '@bleed-believer/commander';
 import { styleText } from 'node:util';
 

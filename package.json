@@ -1,13 +1,19 @@
 {
-  "name": "@mnt-monitor/server",
+  "name": "@bleed-believer/mechty-fstab",
   "type": "module",
+  "version": "0.0.0",
   "scripts": {
     "clear": "rm -rf dist",
     "start": "bleed start ./src/index.ts --",
     "watch": "bleed start -w ./src/index.ts --",
     "build": "bleed build -c tsconfig.build.json",
     "typeorm": "bleed start ./node_modules/typeorm/cli.js --",
-    "test": "node --import @bleed-believer/cli --test --"
+    "test": "node --import @bleed-believer/cli --test --",
+    "prepare": "node --run clear && node --run build"
+  },
+  "bin": {
+    "mechty-fstab": "./dist/index.js",
+    "mechty": "./dist/index.js"
   },
   "devDependencies": {
     "@bleed-believer/cli": "^1.0.0",
@@ -20,5 +26,15 @@
     "@inquirer/prompts": "^8.4.2",
     "better-sqlite3": "^12.9.0",
     "typeorm": "^0.3.28"
-  }
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "fstab",
+    "mnt",
+    "daemon",
+    "systemd",
+    "cli"
+  ]
 }
