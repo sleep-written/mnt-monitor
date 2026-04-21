@@ -6,6 +6,8 @@
 
         "strict": true,
         "verbatimModuleSyntax": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
 
         "outDir": "dist",
         "rootDir": "src",

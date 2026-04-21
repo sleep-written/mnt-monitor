@@ -3,14 +3,22 @@
   "type": "module",
   "scripts": {
     "clear": "rm -rf dist",
-    "start": "bleed start ./src/index.ts",
-    "watch": "bleed start -w ./src/index.ts",
+    "start": "bleed start ./src/index.ts --",
+    "watch": "bleed start -w ./src/index.ts --",
     "build": "bleed build -c tsconfig.build.json",
+    "typeorm": "bleed start ./node_modules/typeorm/cli.js --",
     "test": "node --import @bleed-believer/cli --test --"
   },
   "devDependencies": {
     "@bleed-believer/cli": "^1.0.0",
     "@types/node": "^25.6.0",
     "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@bleed-believer/commander": "^0.0.9-alpha.0",
+    "@inquirer/core": "^11.1.9",
+    "@inquirer/prompts": "^8.4.2",
+    "better-sqlite3": "^12.9.0",
+    "typeorm": "^0.3.28"
   }
 }
