@@ -1,6 +1,15 @@
-import type { AsyncSpawnOptions, AsyncSpawnOutput } from './interfaces/index.js';
-
+import type { SpawnOptionsWithoutStdio } from 'node:child_process';
 import { spawn } from 'node:child_process';
+
+export interface AsyncSpawnOptions extends SpawnOptionsWithoutStdio {
+    encoding?: BufferEncoding;
+    throwsOnExitCode?: boolean;
+}
+export interface AsyncSpawnOutput {
+    code: number | null;
+    stdout?: string;
+    stderr?: string;
+}
 
 export function asyncSpawn(cmd: string, argv?: string[], options?: AsyncSpawnOptions) {
     return new Promise<AsyncSpawnOutput>((resolve, reject) => {
@@ -40,7 +49,13 @@ export function asyncSpawn(cmd: string, argv?: string[], options?: AsyncSpawnOpt
             if (stdoutStr.length > 0) { output.stdout = stdoutStr; }
             if (stderrStr.length > 0) { output.stderr = stderrStr; }
 
-            resolve(output);
+            if (options?.throwsOnExitCode && code !== 0) {
+                const error = new Error(output.stderr ?? output.stdout ?? 'Unknown error');
+                rejected = true;
+                reject(error);
+            } else {
+                resolve(output);
+            }
         });
     });
 }

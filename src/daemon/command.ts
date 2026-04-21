@@ -55,6 +55,7 @@ export class DaemonCommand implements Executable {
 
         console.log('Initializing database...');
         await dataSource.initialize();
+        await dataSource.runMigrations();
 
         console.log('Mechty is watching your fstab!');
         console.log(this.#separator);

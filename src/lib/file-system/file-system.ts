@@ -1,7 +1,7 @@
 import type { FileSystemObject, FileSystemInject } from './interfaces/index.js';
 
 import { fileSystemload } from './file-system-load.js';
-import { asyncSpawn } from './async-spawn.js';
+import { asyncSpawn } from 'lib/wrappers';
 
 export class FileSystem implements FileSystemObject {
     static async load(predicate?: (o: FileSystem, i: number) => boolean): Promise<FileSystem[]> {

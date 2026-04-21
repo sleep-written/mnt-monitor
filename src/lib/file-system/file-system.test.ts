@@ -1,7 +1,7 @@
 import type { AsyncSpawnOptions, AsyncSpawnOutput, FileSystemInject, FileSystemObject } from './interfaces/index.js';
 
-import { test, describe } from 'node:test';
 import { FileSystem } from './file-system.js';
+import { test } from 'node:test';
 
 class Inject implements FileSystemInject {
     #mounted: boolean;

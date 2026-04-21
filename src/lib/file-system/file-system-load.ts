@@ -1,6 +1,6 @@
 import type { FileSystemInject, FileSystemObject } from './interfaces/index.js';
 
-import { asyncSpawn } from './async-spawn.js';
+import { asyncSpawn } from 'lib/wrappers';
 
 export async function fileSystemload(inject?: FileSystemInject): Promise<FileSystemObject[]> {
     const injected: Required<FileSystemInject> = {

@@ -22,6 +22,7 @@ export class SetupCommand implements Executable {
         console.log(banner);
         console.log('Initializing database...');
         await dataSource.initialize();
+        await dataSource.runMigrations();
         
         await new Menu({
             pageSize: 'auto',
