@@ -3,13 +3,14 @@
   "type": "module",
   "private": false,
   "version": "0.0.0",
+  "license": "MIT",
   "scripts": {
+    "test": "node --import @bleed-believer/cli --test --",
     "clear": "rm -rf dist",
     "start": "bleed start ./src/index.ts --",
     "watch": "bleed start -w ./src/index.ts --",
     "build": "bleed build -c tsconfig.build.json",
     "typeorm": "bleed start ./node_modules/typeorm/cli.js --",
-    "test": "node --import @bleed-believer/cli --test --",
     "prepare": "node --run clear && node --run build"
   },
   "bin": {

@@ -1,4 +1,9 @@
 # @bleed-believer/mechty-fstab
+<div align="center">
+  <img src="./banner.png" width="270px">
+  <br />
+</div>
+
 A filesystem mount watchdog daemon for Linux, powered by `findmnt` and `systemd`.
 
 ## Requirements
@@ -36,6 +41,34 @@ mechty daemon
 ```
 
 Polls every second and remounts any watched filesystem that goes down.
+
+### Monitor
+Watch the `mechty-fstab` service logs in real time via `journalctl`:
+
+```bash
+mechty-fstab monitor
+# or
+mechty monitor
+```
+
+Available flags:
+
+| Flag | Description |
+|---|---|
+| `--lines`, `-l` | Number of lines to display before following |
+
+Examples:
+
+```bash
+# Follow logs from the start
+mechty monitor
+
+# Follow logs showing the last 100 lines first
+mechty monitor --lines 100
+mechty monitor -l 100
+```
+
+Press `Ctrl+C` to stop watching.
 
 ## Data location
 | Context | Path |

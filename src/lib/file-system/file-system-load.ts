@@ -13,7 +13,7 @@ export async function fileSystemload(inject?: FileSystemInject): Promise<FileSys
     );
 
     if (code !== 0) {
-        throw new Error(stderr ?? 'Unknown error');
+        throw new Error(stderr ?? stdout ?? 'fstab is not available on this environment');
     }
 
     let json: any;
