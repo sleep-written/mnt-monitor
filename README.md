@@ -1,9 +1,4 @@
 # @bleed-believer/mechty-fstab
-<div align="center">
-  <img src="./banner.png" width="270px">
-  <br />
-</div>
-
 A filesystem mount watchdog daemon for Linux, powered by `findmnt` and `systemd`.
 
 ## Requirements
