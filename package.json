@@ -9,6 +9,9 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "url": "https://github.com/sleep-written/bleed-believer-mechty-fstab"
+  },
   "scripts": {
     "test": "node --import @bleed-believer/cli --test --",
     "clear": "rm -rf dist",
