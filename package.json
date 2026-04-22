@@ -1,7 +1,9 @@
 {
   "name": "@bleed-believer/mechty-fstab",
   "type": "module",
-  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
