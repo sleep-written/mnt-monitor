@@ -6,6 +6,10 @@
   },
   "version": "0.0.1",
   "license": "MIT",
+  "files": [
+    "dist",
+    "banner.png"
+  ],
   "scripts": {
     "test": "node --import @bleed-believer/cli --test --",
     "clear": "rm -rf dist",
